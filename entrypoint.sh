@@ -19,9 +19,8 @@ COMMIT="${COMMIT:-${GITHUB_SHA}}"
 BRANCH="${BRANCH:-${GITHUB_REF#"refs/heads/"}}"
 MESSAGE="${MESSAGE:-}"
 
-echo "$GITHUB_EVENT_PATH"
-NAME=$(jq -r ".pusher.name" "$GITHUB_EVENT_PATH")
-EMAIL=$(jq -r ".pusher.email" "$GITHUB_EVENT_PATH")
+NAME=$(jq -r ".pusher.name" "${CUSTOM_EVENT_PATH:-${GITHUB_EVENT_PATH}}")
+EMAIL=$(jq -r ".pusher.email" "${CUSTOM_EVENT_PATH:-${GITHUB_EVENT_PATH}}")
 
 # Use jq’s --arg properly escapes string values for us
 JSON=$(
