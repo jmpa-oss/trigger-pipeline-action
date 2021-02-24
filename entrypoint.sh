@@ -19,6 +19,7 @@ COMMIT="${COMMIT:-${GITHUB_SHA}}"
 BRANCH="${BRANCH:-${GITHUB_REF#"refs/heads/"}}"
 MESSAGE="${MESSAGE:-}"
 
+echo "$GITHUB_EVENT_PATH"
 NAME=$(jq -r ".pusher.name" "$GITHUB_EVENT_PATH")
 EMAIL=$(jq -r ".pusher.email" "$GITHUB_EVENT_PATH")
 
@@ -53,7 +54,6 @@ fi
 RESPONSE=$(
   curl \
     --fail \
-    --silent \
     -X POST \
     -H "Authorization: Bearer ${BUILDKITE_API_ACCESS_TOKEN}" \
     "https://api.buildkite.com/v2/organizations/${ORG_SLUG}/pipelines/${PIPELINE_SLUG}/builds" \
